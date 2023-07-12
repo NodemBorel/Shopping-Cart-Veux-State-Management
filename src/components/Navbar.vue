@@ -18,24 +18,22 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
+                    <button class="btn btn-outline-dark"  id="MiniCart" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    </button>
+                    <MiniCart @click="$event.stopPropagation()"></MiniCart>
                 </div>
             </div>
         </nav>
         <!-- Product section-->
 </template>
 
-<script>
+<script setup>
 import { RouterLink } from 'vue-router';
-    export default {
-        
-    }
+import MiniCart from './MiniCart.vue';
+
 </script>
 
 <style>
