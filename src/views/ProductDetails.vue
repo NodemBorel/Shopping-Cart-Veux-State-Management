@@ -1,6 +1,6 @@
 <script>
-import Footer from "../components/Footer.vue"
-import ProductCart from "../components/ProductCart.vue"
+import Footer from "../components/Footer.vue";
+import ProductCart from "../components/ProductCart.vue";
 export default{
     components:{Footer, ProductCart},
     props: ["id"],
@@ -36,10 +36,7 @@ export default{
             <div class="container px-4 px-lg-5 mt-5">
                 <h2 class="fw-bolder mb-4">Related products</h2>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    <ProductCart/>
-                    <ProductCart/>
-                    <ProductCart/>
-                    <ProductCart/>
+                    <ProductCart :item="3"/>
                 </div>
             </div>
         </section>

@@ -9,7 +9,7 @@
             <div class="card-body p-4">
                 <div class="text-center">
                     <!-- Product name-->
-                    <h5 class="fw-bolder">Special Item</h5>
+                    <h5 class="fw-bolder">Special Item{{ item.id }}</h5>
                     <!-- Product reviews-->
                     <div class="d-flex justify-content-center small text-warning mb-2">
                         <div class="bi-star-fill"></div>
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <!-- Product actions-->
-            <router-link to="/product/23"><div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <router-link :to="{ name: 'product-details', params: { id: item.id } }"><div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
             </div></router-link>
         </div>
@@ -33,6 +33,12 @@
 
 <script>
     import { RouterLink } from 'vue-router';
+    export default{
+        components: {
+            RouterLink,
+        },
+        props: ['item']
+    }
 </script>
 
 <style scoped>

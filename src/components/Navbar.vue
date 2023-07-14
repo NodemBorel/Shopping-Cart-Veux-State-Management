@@ -11,7 +11,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <RouterLink to="/"><li><a class="dropdown-item" href="">All Products</a></li></RouterLink>
+                                <li><a class="dropdown-item" :href="'/'">All Products</a></li>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li><a class="dropdown-item" href="#!">Popular Items</a></li>
                                 <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
@@ -21,7 +21,7 @@
                     <button class="btn btn-outline-dark"  id="MiniCart" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">{{ count }}</span>
                     </button>
                     <MiniCart @click="$event.stopPropagation()"></MiniCart>
                 </div>
@@ -30,9 +30,21 @@
         <!-- Product section-->
 </template>
 
-<script setup>
+<script>
 import { RouterLink } from 'vue-router';
 import MiniCart from './MiniCart.vue';
+import {mapState} from 'vuex';
+
+export default{
+    components:{
+        RouterLink, MiniCart
+    },
+    computed:{
+        count(){
+            return this.$store.state.CartItem;
+        }
+    }
+}
 
 </script>
 
