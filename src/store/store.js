@@ -1,43 +1,67 @@
 import { createStore } from 'vuex';
+import products from "../mock/products.json";
 
 const store = createStore({
     state(){
         return{
-            products:[
-                {id: 1, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 2, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 3, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 4, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 5, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 6, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 7, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 8, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 9, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 10, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 11, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 12, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 13, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 14, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 15, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 16, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 17, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 18, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 19, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-                {id: 20, name: 'Special Item', regularPrice: '$20.00', salePrice: '$18.00', imageUrl: 'https://dummyimage.com/450x300/dee2e6/6c757d.jpg'},
-            ],
-
-            CartItemCount: 0,
-            CartItem: [],
+            products: [],
+            cart: [],
         }      
     },
     mutations: {
-        // your mutation methods go here
+        getProductData(state) {
+            state.products = products;
+        },
+        addToCart(state, item) {
+        const productInCart = state.cart.find((product) => product.id === item.id);
+        if (!productInCart) {
+            state.cart.push({ ...item, qty: 1 });
+        } else {
+            productInCart.qty++;
+        }
+        },
+        removeFromCart(state, id) {
+        state.cart = state.cart.filter((item) => item.id !== id);
+        },
+        addQty(state, id) {
+        const productInCart = state.cart.find((product) => product.id === id);
+        productInCart.qty++;
+        },
+        reduceQty(state, id) {
+        const productInCart = state.cart.find((product) => product.id === id);
+        if (productInCart.qty > 1) {
+            productInCart.qty--;
+        } else {
+            state.cart.splice(state.cart.indexOf(productInCart, 1));
+        }
+        },
+        emptyCart(state) {
+        state.cart = []
+        }
     },
     actions: {
-        // your action methods go here
+        getProducts({ commit }) {
+            commit("getProductData");
+        },
+        addItemToCart({ commit }, item) {
+        commit("addToCart", item);
+        },
+        removeItemFromCart({ commit }, id) {
+        commit("removeFromCart", id);
+        },
+        addQty({ commit }, id) {
+        commit("addQty", id);
+        },
+        reduceQty({ commit }, id) {
+        commit("reduceQty", id);
+        },
+        emptyCart({ commit }) {
+        commit("emptyCart");
+        }
     },
     getters: {
-        // your getter methods go here
+        products: (state) => state.products,
+        cart: (state) => state.cart,
     }
 })
 
